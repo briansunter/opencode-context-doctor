@@ -57,7 +57,32 @@ These are offscreen renders of the real dashboard components — captured from t
 
 This plugin targets OpenCode 2.0 (`@opencode/plugin` 2.0.x, tested against 2.0.30 types). It is a standard V2 package plugin: the root export is the server plugin, `./tui` is the CLI plugin, `./rpc` is the shared typed RPC contract.
 
-The package is **not published to npm**. Clone this repository wherever you keep code, then load it by path:
+### Quick install (GitHub)
+
+Install globally without manually cloning or configuring a local path:
+
+```sh
+opencode plugin add github:briansunter/opencode-context-doctor
+```
+
+Restart your OpenCode terminal client, send a normal message to capture context, then run `/context-doctor` (or `/context-doctor all` for cross-session statistics). Existing persisted snapshots remain available.
+
+OpenCode V2 supports GitHub package specifications directly. This plugin is **not published to npm**; use the full `github:` specification, not the bare npm package name. The GitHub installation route has not yet been end-to-end verified for this plugin; local-path installation below has been verified.
+
+For project-scoped configuration instead of a global installation:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": ["github:briansunter/opencode-context-doctor"]
+}
+```
+
+Use either the GitHub package or a local checkout, not both. If switching from a local installation, remove only its existing entry from your server configuration and any explicit entry in `cli.json` to avoid loading duplicate copies. Keep your other plugins unchanged.
+
+### Local checkout (development)
+
+Clone this repository wherever you keep code, then load it by path:
 
 ```sh
 git clone https://github.com/briansunter/opencode-context-doctor.git
@@ -75,7 +100,21 @@ bun install --frozen-lockfile
 
 Relative paths from the config file also work (`"plugins": ["../opencode-context-doctor"]`). After editing the config, restart OpenCode; nothing else is configured at runtime. There is deliberately **no** automatic installation, download, or config mutation from inside the plugin.
 
-**Remote-server caveat:** the server plugin (`index.ts`) must be loaded by the OpenCode server that owns the sessions - putting this path in a local `opencode.jsonc` does nothing for sessions on a remote server. A TUI connecting to a remote server can load client-side plugins (including `tui.tsx`) through [`cli.json`](https://opencode.ai/v2/docs/cli/plugins) instead, but the analytics RPC only answers where the server plugin runs.
+### Remote servers
+
+Install the server plugin on the machine running the OpenCode server that owns your sessions. Installing only on the client does not enable server-side capture. If your local TUI also needs an explicit client-side entry, add `"github:briansunter/opencode-context-doctor"` to the `plugins` array in [`cli.json`](https://opencode.ai/v2/docs/cli/plugins), preserving your other entries. The analytics RPC only answers where the server plugin runs.
+
+### Updates and removal
+
+For a GitHub installation:
+
+```sh
+opencode plugin update github:briansunter/opencode-context-doctor
+# To uninstall instead:
+opencode plugin remove github:briansunter/opencode-context-doctor
+```
+
+Restart the terminal client after updating. Remove any separately configured project or `cli.json` entry when uninstalling. Uninstalling the plugin does not delete its statistics database.
 
 ## Usage
 
