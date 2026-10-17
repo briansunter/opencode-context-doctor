@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# local env / secrets
+.env
+.env.*
+
+# plugin-local SQLite state (tests use temp dirs; never commit databases)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# transient preview output (bun run preview writes to the OS temp dir by default)
+context-doctor-preview.txt
+preview.txt
+
+# build / tooling output
+dist/
+coverage/
+*.tsbuildinfo
+*.log
+
+# private caches
+.cache/
+.DS_Store

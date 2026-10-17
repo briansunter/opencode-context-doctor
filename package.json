@@ -1,0 +1,71 @@
+{
+  "name": "opencode-context-doctor",
+  "version": "0.2.0",
+  "description": "Observational OpenCode V2 context analytics: per-session token estimates for the system prompt, messages, and the model-request tool schema snapshot, with a detailed /context-doctor TUI report. Read-only, aggregate-only, no remote calls.",
+  "license": "MIT",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "context",
+    "analytics",
+    "tokens",
+    "tui"
+  ],
+  "type": "module",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/briansunter/opencode-context-doctor.git"
+  },
+  "homepage": "https://github.com/briansunter/opencode-context-doctor#readme",
+  "bugs": "https://github.com/briansunter/opencode-context-doctor/issues",
+  "exports": {
+    ".": "./index.ts",
+    "./tui": "./tui.tsx",
+    "./rpc": "./rpc.ts"
+  },
+  "files": [
+    "index.ts",
+    "tui.tsx",
+    "rpc.ts",
+    "analytics.ts",
+    "dashboard.ts",
+    "enrich.ts",
+    "error-codes.ts",
+    "estimate.ts",
+    "format.ts",
+    "location.ts",
+    "persist.ts",
+    "persist-protocol.ts",
+    "persist-stats.ts",
+    "persist-worker.ts",
+    "store.ts",
+    "types.ts",
+    "usage.ts",
+    "bun-sqlite.d.ts",
+    "docs/screenshots"
+  ],
+  "scripts": {
+    "test": "bun test --preload @opentui/solid/preload",
+    "typecheck": "tsc --noEmit",
+    "smoke": "bun smoke.ts",
+    "preview": "bun --preload @opentui/solid/preload tui-preview.tsx",
+    "screenshots": "bun --preload @opentui/solid/preload scripts/screenshots.tsx",
+    "bench:persist": "bun persist.bench.ts"
+  },
+  "peerDependencies": {
+    "@opentui/core": ">=0.5.17",
+    "@opentui/solid": ">=0.5.17",
+    "solid-js": ">=1.9.0"
+  },
+  "devDependencies": {
+    "@opencode/ai": "2.0.30",
+    "@opencode/client": "2.0.30",
+    "@opencode/plugin": "2.0.30",
+    "@opentui/core": ">=0.5.17",
+    "@opentui/solid": ">=0.5.17",
+    "@types/node": "^26.6.5",
+    "solid-js": ">=1.9.0",
+    "typescript": "^7.0.2"
+  }
+}
